@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Template Syntax</title>
+
+<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Template Syntax</h1>
+
+
+
+<p>This vignette describes the template syntax supported by jinjar, following the structure of the Jinja <a href="https://jinja.palletsprojects.com/templates/">Template Designer Documentation</a>. It is designed to act as a reference when writing templates.</p>
+<p>The jinjar R package is powered by the <a href="https://github.com/pantor/inja">inja</a> C++ library. The syntax is very similar to that of the Jinja Python package, but there are also many differences. Unfortunately, this means jinjar is not a drop-in replacement for Jinja – you might need to adapt existing Jinja templates for the jinjar engine.</p>
+<p>The most fundamental difference between jinjar and Jinja is:</p>
+<ul>
+<li>Jinja variables support direct interaction with the underlying Python objects.</li>
+<li>jinjar variables are simple <a href="https://www.w3schools.com/js/js_json_datatypes.asp">JSON data types</a>. The underlying R objects are translated to JSON.</li>
+</ul>
+<p>This is described in more detail in the <a href="#variables">Variables</a> section below.</p>
+<p>Before starting, let’s create a few R objects for rendering example templates.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jinjar)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># length-1 vector</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>title <span class="ot">&lt;-</span> <span class="st">&quot;My Webpage&quot;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># vector</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>users <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;User A&quot;</span>, <span class="st">&quot;User B&quot;</span>, <span class="st">&quot;User C&quot;</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># list</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>godzilla <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">Name =</span> <span class="st">&quot;Godzilla&quot;</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">Born =</span> <span class="dv">1952</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">Birthplace =</span> <span class="st">&quot;Japan&quot;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># data frame</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>navigation <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="fu">c</span>(<span class="st">&quot;Home&quot;</span>, <span class="st">&quot;Blog&quot;</span>),</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">href =</span> <span class="fu">c</span>(<span class="st">&quot;index.html&quot;</span>, <span class="st">&quot;blog.html&quot;</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># HTML special characters</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>name <span class="ot">&lt;-</span> <span class="st">&#39;Dwayne &quot;The Rock&quot; Johnson&#39;</span></span></code></pre></div>
+<div id="synopsis" class="section level2">
+<h2>Synopsis</h2>
+<p>A jinjar template is simply a text file, and when rendered the output is also a text file (e.g. HTML, SQL, LaTeX).</p>
+<p>A template contains <strong>variables</strong> and/or <strong>expressions</strong>, which get replaced with values when a template is rendered; and <strong>tags</strong>, which control the logic of the template.</p>
+<p>Below is a minimal template that illustrates a few basics using the default jinjar configuration. We will cover the details later in this document:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode jinjar html bg-info"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;html</span> <span class="er">lang</span><span class="ot">=</span><span class="st">&quot;en&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;head&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;title&gt;</span>{{ title }}<span class="kw">&lt;/title&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/head&gt;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;body&gt;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;ul</span> <span class="er">id</span><span class="ot">=</span><span class="st">&quot;navigation&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    {% for item in navigation -%}</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">&lt;li&gt;&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">&quot;{{ item.href }}&quot;</span><span class="kw">&gt;</span>{{ item.caption }}<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    {% endfor -%}</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;/ul&gt;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    {# a comment #}</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/body&gt;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/html&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode html bg-success"><code class="sourceCode html"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;html</span> <span class="er">lang</span><span class="ot">=</span><span class="st">&quot;en&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;head&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;title&gt;</span>My Webpage<span class="kw">&lt;/title&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/head&gt;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;body&gt;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;ul</span> <span class="er">id</span><span class="ot">=</span><span class="st">&quot;navigation&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;li&gt;&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">&quot;index.html&quot;</span><span class="kw">&gt;</span>Home<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;li&gt;&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">&quot;blog.html&quot;</span><span class="kw">&gt;</span>Blog<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;/ul&gt;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/body&gt;</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/html&gt;</span></span></code></pre></div>
+<p>The following example shows the default configuration settings, but you can adjust the syntax configuration as desired using <code>jinjar_config()</code>.</p>
+<p>There are a few kinds of delimiters. The default delimiters are configured as follows:</p>
+<ul>
+<li><code>{% ... %}</code> for <a href="#control-structures">Statements</a></li>
+<li><code>{{ ... }}</code> for <a href="#expressions">Expressions</a> to print to the template output</li>
+<li><code>{# ... #}</code> for <a href="#comments">Comments</a> not included in the template output</li>
+</ul>
+<p><a href="#line-statements">Line Statements</a> are also possible, though they don’t have default prefix characters. To use them, set <code>line_statement</code> when creating the <code>jinjar_config()</code>.</p>
+</div>
+<div id="variables" class="section level2">
+<h2>Variables</h2>
+<p>When writing a template, we refer to variables that act as data placeholders. We define their values when rendering the template.</p>
+<p>Although we pass R objects to <code>render()</code>, it is helpful to understand that these are encoded as JSON objects before the template is rendered.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">R object</th>
+<th align="left">JSON object</th>
+<th align="left">Template example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Length-1 vector</td>
+<td align="left">Scalar</td>
+<td align="left"><code>{{ foo }}</code></td>
+</tr>
+<tr class="even">
+<td align="left">Vector</td>
+<td align="left">Array</td>
+<td align="left"><code>{{ foo.1 }}</code></td>
+</tr>
+<tr class="odd">
+<td align="left">List</td>
+<td align="left">Object</td>
+<td align="left"><code>{{ foo.bar }}</code></td>
+</tr>
+<tr class="even">
+<td align="left">Data frame</td>
+<td align="left">Array of objects</td>
+<td align="left"><code>{{ foo.1.bar }}</code></td>
+</tr>
+</tbody>
+</table>
+<p>You can use dot (<code>.</code>) notation to access data nested within a variable. An array element is accessed by its numeric index (e.g. <code>foo.1</code>) and an object value is accessed by its key (e.g. <code>foo.bar</code>).</p>
+<p><strong>Note:</strong> In R, the dot is a valid character in an object name (e.g. <code>my.data</code>). However, this causes ambiguity when accessing nested data values. For this reason, each dot is replaced with an underscore when the data is encoded as JSON (e.g. <code>my.data</code> becomes <code>my_data</code>).</p>
+<p>The double-brace syntax is used to print the value of the variable (e.g. <code>{{ foo }}</code>). To use the variable in other contexts (e.g. control structures), then these braces are omitted (e.g. <code>{% for bar in foo %}</code>).</p>
+<p>If a template variable has not been defined, then an error occurs. However, you can use the <code>default(foo, bar)</code> function to specify a fallback value.</p>
+</div>
+<div id="comments" class="section level2">
+<h2>Comments</h2>
+<p>To comment-out some lines, preventing them from appearing in the rendered document, use the comment syntax (default: <code>{# ... #}</code>). This is useful for debugging or documenting the template.</p>
+<pre class="jinjar bg-info"><code>Hello{# TODO: update this #}!</code></pre>
+<pre class="bg-success"><code>Hello!</code></pre>
+</div>
+<div id="whitespace" class="section level2">
+<h2>Whitespace Control</h2>
+<p>In the default configuration, whitespace (e.g. spaces, tabs, newlines) is left unchanged in the rendered output. For example, in the default configuration we get:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode jinjar html bg-info"><code class="sourceCode html"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;div&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    {% if true %}</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        yay</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    {% endif %}</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/div&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode html bg-success"><code class="sourceCode html"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;div&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>        yay</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/div&gt;</span></span></code></pre></div>
+<p>By setting <code>trim_blocks = TRUE</code> when creating the <code>jinjar_config()</code>, the first newline after a control block is automatically removed. Setting <code>lstrip_blocks = TRUE</code> removes any whitespace from the beginning of the line until the start of each block. With both options enabled, the above example becomes:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode jinjar html bg-info"><code class="sourceCode html"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;div&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    {% if true %}</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        yay</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    {% endif %}</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/div&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode html bg-success"><code class="sourceCode html"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;div&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>        yay</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/div&gt;</span></span></code></pre></div>
+<p>Instead of changing the global configuration, you can manually trim whitespace at a more finegrained level.</p>
+<ul>
+<li>By putting a minus sign (<code>-</code>) after the opening delimiter, this removes any whitespace from the beginning of the line until the start of the block (i.e. the same as the <code>lstrip_blocks</code> feature).</li>
+<li>By putting a minus sign (<code>-</code>) before the closing delimiter, this removes any whitespace (including newlines) until the next non-whitespace character (i.e. slightly different from the <code>trim_blocks</code> feature).</li>
+</ul>
+<p>This can be activated for control blocks, comments, or variable expressions:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode jinjar html bg-info"><code class="sourceCode html"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;div&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    {% if true -%}</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>        yay</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    {%- endif -%}</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/div&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode html bg-success"><code class="sourceCode html"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;div&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    yay</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/div&gt;</span></span></code></pre></div>
+</div>
+<div id="line-statements" class="section level2">
+<h2>Line Statements</h2>
+<p>If line statements are enabled (see <code>jinjar_config()</code>), it’s possible to mark a line as a statement. For example, if the line statement prefix is configured to <code>#</code>, you can do:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode jinjar html bg-info"><code class="sourceCode html"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;ul</span> <span class="er">id</span><span class="ot">=</span><span class="st">&quot;navigation&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a># for item in navigation</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;li&gt;&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">&quot;{{ item.href }}&quot;</span><span class="kw">&gt;</span>{{ item.caption }}<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a># endfor</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/ul&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode html bg-success"><code class="sourceCode html"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;ul</span> <span class="er">id</span><span class="ot">=</span><span class="st">&quot;navigation&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;li&gt;&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">&quot;index.html&quot;</span><span class="kw">&gt;</span>Home<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;li&gt;&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">&quot;blog.html&quot;</span><span class="kw">&gt;</span>Blog<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/ul&gt;</span></span></code></pre></div>
+</div>
+<div id="html-escaping" class="section level2">
+<h2>HTML Escaping</h2>
+<p>When generating HTML from templates, there’s always a risk that a variable will include characters that affect the resulting HTML. The special characters are: <code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code> and <code>&quot;</code>.</p>
+<p>In jinjar, it’s <strong>your</strong> responsibility to manually escape variables, using the <code>escape_html()</code> function. You should escape variables that <em>might</em> contain any of the special characters. But if a variable is trusted to contain well-formed HTML, then it should not be escaped (otherwise you could accidentally double-escape the content).</p>
+<pre class="jinjar bg-info"><code>&lt;input type=&quot;text&quot; value=&quot;{{ escape_html(name) }}&quot;&gt;</code></pre>
+<pre class="bg-success"><code>&lt;input type=&quot;text&quot; value=&quot;Dwayne &amp;quot;The Rock&amp;quot; Johnson&quot;&gt;</code></pre>
+</div>
+<div id="control-structures" class="section level2">
+<h2>Control Structures</h2>
+<p>A control structure refers to all those things that control the flow of a program. With the default syntax, control structures appear inside <code>{% ... %}</code> blocks.</p>
+<div id="for" class="section level3">
+<h3>For</h3>
+<p>A for-loop allows you to iterate over each element in a vector:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode jinjar markdown bg-info"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>{% for user in users -%}</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>{{ loop.index1 }}. {{ user }}</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>{%- endfor -%}</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode markdown bg-success"><code class="sourceCode markdown"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>User A</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>User B</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>User C</span></code></pre></div>
+<p>or loop over key-value pairs in a named list:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode jinjar html bg-info"><code class="sourceCode html"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;dl&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>{% for key, value in godzilla %}</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;dt&gt;</span>{{ key }}<span class="kw">&lt;/dt&gt;</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;dd&gt;</span>{{ value }}<span class="kw">&lt;/dd&gt;</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>{% endfor -%}</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/dl&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode html bg-success"><code class="sourceCode html"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;dl&gt;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;dt&gt;</span>Birthplace<span class="kw">&lt;/dt&gt;</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;dd&gt;</span>Japan<span class="kw">&lt;/dd&gt;</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;dt&gt;</span>Born<span class="kw">&lt;/dt&gt;</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;dd&gt;</span>1952<span class="kw">&lt;/dd&gt;</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;dt&gt;</span>Name<span class="kw">&lt;/dt&gt;</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;dd&gt;</span>Godzilla<span class="kw">&lt;/dd&gt;</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/dl&gt;</span></span></code></pre></div>
+<p>As described in <a href="#variables">Variables</a>, a data frame is translated to an array of JSON objects. Therefore a nested combination of the above two loops could theoretically be used. In practice, it is much more common to iterate over rows and access the individual elements by their attributes:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode jinjar html bg-info"><code class="sourceCode html"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;ul</span> <span class="er">id</span><span class="ot">=</span><span class="st">&quot;navigation&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>{% for item in navigation -%}</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;li&gt;&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">&quot;{{ item.href }}&quot;</span><span class="kw">&gt;</span>{{ item.caption }}<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>{% endfor -%}</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/ul&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode html bg-success"><code class="sourceCode html"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;ul</span> <span class="er">id</span><span class="ot">=</span><span class="st">&quot;navigation&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;li&gt;&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">&quot;index.html&quot;</span><span class="kw">&gt;</span>Home<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;li&gt;&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">&quot;blog.html&quot;</span><span class="kw">&gt;</span>Blog<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/ul&gt;</span></span></code></pre></div>
+<p>While inside a for-loop block, you can access some special variables:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Variable</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>loop.index</code></td>
+<td align="left">The current iteration (0-based).</td>
+</tr>
+<tr class="even">
+<td align="left"><code>loop.index1</code></td>
+<td align="left">The current iteration (1-based).</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>loop.is_first</code></td>
+<td align="left">True if first iteration.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>loop.is_last</code></td>
+<td align="left">True if last iteration.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>loop.parent</code></td>
+<td align="left">In nested loops, the parent loop variable.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="if" class="section level3">
+<h3>If</h3>
+<p>Conditional branches are written using <code>if</code>, <code>else if</code> and <code>else</code> statements, which evaluate <a href="#expressions">Expressions</a>.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode jinjar markdown bg-info"><code class="sourceCode markdown"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>{% if length(users) &gt; 5 -%}</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>{% for user in users -%}</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>{{ user }}</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>{% endfor %}</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>{% else if length(users) &gt; 0 -%}</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>{{ join(users, &quot;, &quot;) }}.</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>{% else -%}</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>No users found.</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>{% endif %}</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode markdown bg-success"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>User A, User B, User C.</span></code></pre></div>
+</div>
+<div id="assignments" class="section level3">
+<h3>Assignments</h3>
+<p>Using the <code>set</code> statement, you can assign values to variables.</p>
+<pre class="jinjar bg-info"><code>{% set name=&quot;world&quot; -%}
+Hello {{ name }}!</code></pre>
+<pre class="bg-success"><code>Hello world!</code></pre>
+</div>
+<div id="extends" class="section level3">
+<h3>Extends</h3>
+<p>The <code>extends</code> tag can be used for template inheritance. See <em>Template Inheritance</em> in <code>vignette(&quot;auxiliary-templates&quot;)</code>.</p>
+</div>
+<div id="include" class="section level3">
+<h3>Include</h3>
+<p>The <code>include</code> tag inserts the rendered contents of an auxiliary template. See <em>Template Inclusion</em> in <code>vignette(&quot;auxiliary-templates&quot;)</code>.</p>
+</div>
+</div>
+<div id="expressions" class="section level2">
+<h2>Expressions</h2>
+<p>Basic expressions are supported in templates.</p>
+<div id="literals" class="section level3">
+<h3>Literals</h3>
+<p>The simplest form of expressions are literals, which represent fixed values.</p>
+<p>As described in <a href="#variables">Variables</a>, the template is rendered using data stored in JSON format. For this reason, literals must also be specified in JSON format. The following types of literals are supported:</p>
+<ul>
+<li><strong>String:</strong> characters between two double quotes.</li>
+<li><strong>Integer:</strong> whole numbers without decimal part.</li>
+<li><strong>Numeric:</strong> floating point numbers written in decimal or scientific format.</li>
+<li><strong>Boolean:</strong> either <code>true</code> or <code>false</code> (lowercase).</li>
+<li><strong>List:</strong> data between square brackets.</li>
+<li><strong>Object:</strong> key-value data pairs between curly brackets (each key must be a string).</li>
+<li><strong>NULL:</strong> missing data is represented by <code>null</code>.</li>
+</ul>
+<p>Here is example usage for each type:</p>
+<pre class="jinjar bg-info"><code>String: {{ &quot;A string&quot; }}
+Integer: {{ 3 }}
+Numeric: {{ 3.14 }} or {{ 1.6e-19 }}
+Boolean: {{ true }} or {{ false }}
+List: {{ [1, 2, 3] }}
+Object: {{ {&quot;a&quot;: 1, &quot;b&quot;: 2} }}
+Null: {{ null }}</code></pre>
+<pre class="bg-success"><code>String: A string
+Integer: 3
+Numeric: 3.14 or 1.6e-19
+Boolean: true or false
+List: [1,2,3]
+Object: {&quot;a&quot;:1,&quot;b&quot;:2}
+Null: </code></pre>
+</div>
+<div id="math" class="section level3">
+<h3>Math</h3>
+<p>You can perform simple arithmetic using standard operators:</p>
+<pre class="jinjar bg-info"><code>1 + 1: {{ 1 + 1 }}
+3 - 2: {{ 3 - 2 }}
+2 * 2: {{ 2 * 2 }}
+1 / 2: {{ 1 / 2 }}
+2 ^ 3: {{ 2 ^ 3 }}
+7 % 3: {{ 7 % 3 }}</code></pre>
+<pre class="bg-success"><code>1 + 1: 2
+3 - 2: 1
+2 * 2: 4
+1 / 2: 0.5
+2 ^ 3: 8
+7 % 3: 1</code></pre>
+</div>
+<div id="comparisons" class="section level3">
+<h3>Comparisons</h3>
+<p>You can perform comparisons:</p>
+<pre class="jinjar bg-info"><code>1 == 1: {{ 1 == 1 }}
+1 != 1: {{ 1 != 1 }}
+2 &gt;  1: {{ 2 &gt; 1 }}
+2 &gt;= 1: {{ 2 &gt;= 1 }}
+2 &lt;  1: {{ 2 &lt; 1 }}
+2 &lt;= 1: {{ 2 &lt;= 1 }}</code></pre>
+<pre class="bg-success"><code>1 == 1: true
+1 != 1: false
+2 &gt;  1: true
+2 &gt;= 1: true
+2 &lt;  1: false
+2 &lt;= 1: false</code></pre>
+</div>
+<div id="logic" class="section level3">
+<h3>Logic</h3>
+<p>Within expressions and control structures, you can use the Boolean operators: <code>and</code>, <code>or</code>, and <code>not</code>.</p>
+<pre class="jinjar bg-info"><code>true and false: {{ true and false }}
+true or false: {{ true or false }}
+not false: {{ not false }}</code></pre>
+<pre class="bg-success"><code>true and false: false
+true or false: true
+not false: true</code></pre>
+<p>You can also check if a value is contained within a list using <code>in</code>:</p>
+<pre class="jinjar bg-info"><code>{{ 1 in [1, 2, 3] }}</code></pre>
+<pre class="bg-success"><code>true</code></pre>
+</div>
+</div>
+<div id="functions" class="section level2">
+<h2>Functions</h2>
+<div id="data-checks" class="section level3">
+<h3>Data Checks</h3>
+<p>You can check if a value exists by passing the variable name as a string:</p>
+<pre class="jinjar bg-info"><code>users does exist: {{ exists(&quot;users&quot;) }}
+abc doesn&#39;t exist: {{ exists(&quot;abc&quot;) }}</code></pre>
+<pre class="bg-success"><code>users does exist: true
+abc doesn&#39;t exist: false</code></pre>
+<p>Similarly, you can check if a value exists within a JSON object, by passing the key as a string:</p>
+<pre class="jinjar bg-info"><code>Birthplace does exist: {{ existsIn(godzilla, &quot;Birthplace&quot;) }}
+Weight doesn&#39;t exist: {{ existsIn(godzilla, &quot;Weight&quot;) }}</code></pre>
+<pre class="bg-success"><code>Birthplace does exist: true
+Weight doesn&#39;t exist: false</code></pre>
+<p>Concisely handle missing values using the <code>default()</code> function:</p>
+<pre class="jinjar bg-info"><code>{{ default(godzilla.Weight, 20000) }}</code></pre>
+<pre class="bg-success"><code>20000</code></pre>
+<p>You can also check the data type of a variable or literal:</p>
+<pre class="jinjar bg-info"><code>{{ isString(&quot;a string&quot;) }}
+{{ isInteger(3) }}
+{{ isFloat(3.14) }}
+{{ isNumber(3) }} and {{ isNumber(3.14) }}
+{{ isBoolean(false) }}
+{{ isArray([1, 2, 3]) }}
+{{ isObject({&quot;a&quot;: 1, &quot;b&quot;: 2}) }}</code></pre>
+<pre class="bg-success"><code>true
+true
+true
+true and true
+true
+true
+true</code></pre>
+</div>
+<div id="data-conversion" class="section level3">
+<h3>Data Conversion</h3>
+<p>You can convert strings to numeric types, using the <code>int()</code> or <code>float()</code> functions:</p>
+<pre class="jinjar bg-info"><code>{{ int(&quot;2&quot;) }}
+{{ float(&quot;2.5&quot;) }}</code></pre>
+<pre class="bg-success"><code>2
+2.5</code></pre>
+</div>
+<div id="numeric-data" class="section level3">
+<h3>Numeric Data</h3>
+<p>You can check if an integer is even or odd, or divisible by some other integer. This could be used to make alternating row colors.</p>
+<pre class="jinjar bg-info"><code>{{ even(42) }}
+{{ odd(42) }}
+{{ divisibleBy(42, 7) }}</code></pre>
+<pre class="bg-success"><code>true
+false
+true</code></pre>
+<p>You can round floating point numbers to a specific precision:</p>
+<pre class="jinjar bg-info"><code>{{ round(3.1415, 0) }}
+{{ round(3.1415, 3) }}</code></pre>
+<pre class="bg-success"><code>3
+3.142</code></pre>
+</div>
+<div id="string-data" class="section level3">
+<h3>String Data</h3>
+<p>Translate a string to lower case or upper case:</p>
+<pre class="jinjar bg-info"><code>{{ lower(&quot;Hello&quot;) }}
+{{ upper(&quot;Hello&quot;) }}</code></pre>
+<pre class="bg-success"><code>hello
+HELLO</code></pre>
+<p>Escape special characters for use in HTML content (see <a href="#html-escaping">HTML Escaping</a>):</p>
+<pre class="jinjar bg-info"><code>&lt;input type=&quot;text&quot; value=&quot;{{ escape_html(name) }}&quot;&gt;</code></pre>
+<pre class="bg-success"><code>&lt;input type=&quot;text&quot; value=&quot;Dwayne &amp;quot;The Rock&amp;quot; Johnson&quot;&gt;</code></pre>
+</div>
+<div id="json-lists" class="section level3">
+<h3>JSON Lists</h3>
+<p>Get the number of list elements:</p>
+<pre class="jinjar bg-info"><code>length(): {{ length([3,1,2]) }}</code></pre>
+<pre class="bg-success"><code>length(): 3</code></pre>
+<p>Get the first or last elements:</p>
+<pre class="jinjar bg-info"><code>first(): {{ first([3,1,2]) }}
+last():  {{ last([3,1,2]) }}</code></pre>
+<pre class="bg-success"><code>first(): 3
+last():  2</code></pre>
+<p>Get the minimum or maximum elements:</p>
+<pre class="jinjar bg-info"><code>min(): {{ min([3,1,2]) }}
+max(): {{ max([3,1,2]) }}</code></pre>
+<pre class="bg-success"><code>min(): 1
+max(): 3</code></pre>
+<p>Sort the list into ascending order:</p>
+<pre class="jinjar bg-info"><code>sort(): {{ sort([3,1,2]) }}</code></pre>
+<pre class="bg-success"><code>sort(): [1,2,3]</code></pre>
+<p>Join a list with a separator:</p>
+<pre class="jinjar bg-info"><code>{{ join([1,2,3], &quot; + &quot;) }}
+{{ join(users, &quot;, &quot;) }}</code></pre>
+<pre class="bg-success"><code>1 + 2 + 3
+User A, User B, User C</code></pre>
+<p>Generate a list as a range of integers:</p>
+<pre class="jinjar bg-info"><code>{% for i in range(4) %}{{ loop.index1 }}{% endfor %}</code></pre>
+<pre class="bg-success"><code>1234</code></pre>
+<p>Access elements using a dynamic index with <code>at()</code>. Note that the index is <strong>zero-based</strong>.</p>
+<pre class="jinjar bg-info"><code>{% set x = [1,2,3] -%}
+{% set i = 2 -%}
+{{ x.2 }}
+{{ at(x, i) }}</code></pre>
+<pre class="bg-success"><code>3
+3</code></pre>
+</div>
+<div id="json-objects" class="section level3">
+<h3>JSON Objects</h3>
+<p>Access values using a dynamic key with <code>at()</code>:</p>
+<pre class="jinjar bg-info"><code>{% set x = {&quot;a&quot;: 1, &quot;b&quot;: 2} -%}
+{% set key = &quot;b&quot; -%}
+{{ x.b }}
+{{ at(x, key) }}</code></pre>
+<pre class="bg-success"><code>2
+2</code></pre>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

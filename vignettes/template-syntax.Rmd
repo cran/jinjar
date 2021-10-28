@@ -1,0 +1,526 @@
+---
+title: "Template Syntax"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Template Syntax}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This vignette describes the template syntax supported by jinjar, following the structure of the Jinja [Template Designer Documentation](https://jinja.palletsprojects.com/templates/).
+It is designed to act as a reference when writing templates.
+
+The jinjar R package is powered by the [inja](https://github.com/pantor/inja) C++ library.
+The syntax is very similar to that of the Jinja Python package, but there are also many differences.
+Unfortunately, this means jinjar is not a drop-in replacement for Jinja -- you might need to adapt existing Jinja templates for the jinjar engine.
+
+The most fundamental difference between jinjar and Jinja is:
+
+* Jinja variables support direct interaction with the underlying Python objects.
+* jinjar variables are simple [JSON data types](https://www.w3schools.com/js/js_json_datatypes.asp). The underlying R objects are translated to JSON.
+
+This is described in more detail in the [Variables](#variables) section below.
+
+Before starting, let's create a few R objects for rendering example templates.
+
+```{r setup}
+library(jinjar)
+
+# length-1 vector
+title <- "My Webpage"
+
+# vector
+users <- c("User A", "User B", "User C")
+
+# list
+godzilla <- list(
+  Name = "Godzilla",
+  Born = 1952,
+  Birthplace = "Japan"
+)
+
+# data frame
+navigation <- data.frame(
+  caption = c("Home", "Blog"),
+  href = c("index.html", "blog.html")
+)
+
+# HTML special characters
+name <- 'Dwayne "The Rock" Johnson'
+```
+
+```{r, include=FALSE}
+params <- list(
+  title = title,
+  users = users,
+  godzilla = godzilla,
+  navigation = navigation,
+  name = name
+)
+```
+
+
+## Synopsis
+
+A jinjar template is simply a text file, and when rendered the output is also a text file (e.g. HTML, SQL, LaTeX).
+
+A template contains **variables** and/or **expressions**, which get replaced with values when a template is rendered; and **tags**, which control the logic of the template.
+
+Below is a minimal template that illustrates a few basics using the default jinjar configuration.
+We will cover the details later in this document:
+
+```{jinjar, data=params, engine.opts=list(lang="html")}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ title }}</title>
+</head>
+<body>
+    <ul id="navigation">
+    {% for item in navigation -%}
+        <li><a href="{{ item.href }}">{{ item.caption }}</a></li>
+    {% endfor -%}
+    </ul>
+    {# a comment #}
+</body>
+</html>
+```
+
+The following example shows the default configuration settings, but you can adjust the syntax configuration as desired using `jinjar_config()`.
+
+There are a few kinds of delimiters. The default delimiters are configured as follows:
+
+* `{% ... %}` for [Statements](#control-structures)
+* `{{ ... }}` for [Expressions](#expressions) to print to the template output
+* `{# ... #}` for [Comments](#comments) not included in the template output
+
+[Line Statements](#line-statements) are also possible, though they don’t have default prefix characters.
+To use them, set `line_statement` when creating the `jinjar_config()`.
+
+
+## Variables {#variables}
+
+When writing a template, we refer to variables that act as data placeholders.
+We define their values when rendering the template.
+
+Although we pass R objects to `render()`, it is helpful to understand that these are encoded as JSON objects before the template is rendered.
+
+| R object        | JSON object      | Template example  |
+|:----------------|:-----------------|:------------------|
+| Length-1 vector | Scalar           | `{{ foo }}`       |
+| Vector          | Array            | `{{ foo.1 }}`     |
+| List            | Object           | `{{ foo.bar }}`   |
+| Data frame      | Array of objects | `{{ foo.1.bar }}` |
+
+You can use dot (`.`) notation to access data nested within a variable.
+An array element is accessed by its numeric index (e.g. `foo.1`) and an object value is accessed by its key (e.g. `foo.bar`).
+
+**Note:** In R, the dot is a valid character in an object name (e.g. `my.data`).
+However, this causes ambiguity when accessing nested data values.
+For this reason, each dot is replaced with an underscore when the data is encoded as JSON (e.g. `my.data` becomes `my_data`).
+
+The double-brace syntax is used to print the value of the variable (e.g. `{{ foo }}`).
+To use the variable in other contexts (e.g. control structures), then these braces are omitted (e.g. `{% for bar in foo %}`).
+
+If a template variable has not been defined, then an error occurs.
+However, you can use the `default(foo, bar)` function to specify a fallback value.
+
+
+## Comments {#comments}
+
+To comment-out some lines, preventing them from appearing in the rendered document, use the comment syntax (default: `{# ... #}`).
+This is useful for debugging or documenting the template.
+
+```{jinjar}
+Hello{# TODO: update this #}!
+```
+
+
+## Whitespace Control {#whitespace}
+
+In the default configuration, whitespace (e.g. spaces, tabs, newlines) is left unchanged in the rendered output.
+For example, in the default configuration we get:
+
+```{jinjar, engine.opts=list(lang="html")}
+<div>
+    {% if true %}
+        yay
+    {% endif %}
+</div>
+```
+
+By setting `trim_blocks = TRUE` when creating the `jinjar_config()`, the first newline after a control block is automatically removed.
+Setting `lstrip_blocks = TRUE` removes any whitespace from the beginning of the line until the start of each block.
+With both options enabled, the above example becomes:
+
+```{jinjar, engine.opts=list(lang="html", config=jinjar_config(trim_blocks=TRUE, lstrip_blocks=TRUE))}
+<div>
+    {% if true %}
+        yay
+    {% endif %}
+</div>
+```
+
+Instead of changing the global configuration, you can manually trim whitespace at a more finegrained level.
+
+* By putting a minus sign (`-`) after the opening delimiter, this removes any whitespace from the beginning of the line until the start of the block (i.e. the same as the `lstrip_blocks` feature).
+* By putting a minus sign (`-`) before the closing delimiter, this removes any whitespace (including newlines) until the next non-whitespace character (i.e. slightly different from the `trim_blocks` feature).
+
+This can be activated for control blocks, comments, or variable expressions:
+
+```{jinjar, engine.opts=list(lang="html")}
+<div>
+    {% if true -%}
+        yay
+    {%- endif -%}
+</div>
+```
+
+
+## Line Statements {#line-statements}
+
+If line statements are enabled (see `jinjar_config()`), it’s possible to mark a line as a statement.
+For example, if the line statement prefix is configured to `#`, you can do:
+
+```{jinjar, data=params, engine.opts=list(lang="html", config=jinjar_config(line_statement="#"))}
+<ul id="navigation">
+# for item in navigation
+    <li><a href="{{ item.href }}">{{ item.caption }}</a></li>
+# endfor
+</ul>
+```
+
+
+## HTML Escaping {#html-escaping}
+
+When generating HTML from templates, there’s always a risk that a variable will include characters that affect the resulting HTML.
+The special characters are: `<`, `>`, `&` and `"`.
+
+In jinjar, it's **your** responsibility to manually escape variables, using the `escape_html()` function.
+You should escape variables that _might_ contain any of the special characters.
+But if a variable is trusted to contain well-formed HTML, then it should not be escaped (otherwise you could accidentally double-escape the content).
+
+```{jinjar, data=params}
+<input type="text" value="{{ escape_html(name) }}">
+```
+
+
+## Control Structures {#control-structures}
+
+A control structure refers to all those things that control the flow of a program.
+With the default syntax, control structures appear inside `{% ... %}` blocks.
+
+
+### For
+
+A for-loop allows you to iterate over each element in a vector:
+
+```{jinjar, data=params, engine.opts=list(lang="markdown")}
+{% for user in users -%}
+{{ loop.index1 }}. {{ user }}
+{%- endfor -%}
+```
+
+or loop over key-value pairs in a named list:
+
+```{jinjar, data=params, engine.opts=list(lang="html")}
+<dl>
+{% for key, value in godzilla %}
+  <dt>{{ key }}</dt>
+  <dd>{{ value }}</dd>
+{% endfor -%}
+</dl>
+```
+
+As described in [Variables](#variables), a data frame is translated to an array of JSON objects.
+Therefore a nested combination of the above two loops could theoretically be used.
+In practice, it is much more common to iterate over rows and access the individual elements by their attributes:
+
+```{jinjar, data=params, engine.opts=list(lang="html", config=jinjar_config(line_statement="#"))}
+<ul id="navigation">
+{% for item in navigation -%}
+<li><a href="{{ item.href }}">{{ item.caption }}</a></li>
+{% endfor -%}
+</ul>
+```
+
+While inside a for-loop block, you can access some special variables:
+
+| Variable        | Description |
+|:----------------|:------------|
+| `loop.index`    | The current iteration (0-based). |
+| `loop.index1`   | The current iteration (1-based). |
+| `loop.is_first` | True if first iteration. |
+| `loop.is_last`  | True if last iteration. |
+| `loop.parent`   | In nested loops, the parent loop variable. |
+
+
+### If
+
+Conditional branches are written using `if`, `else if` and `else` statements, which evaluate [Expressions](#expressions).
+
+```{jinjar, data=params, engine.opts=list(lang="markdown")}
+{% if length(users) > 5 -%}
+{% for user in users -%}
+* {{ user }}
+{% endfor %}
+{% else if length(users) > 0 -%}
+{{ join(users, ", ") }}.
+{% else -%}
+No users found.
+{% endif %}
+```
+
+
+### Assignments
+
+Using the `set` statement, you can assign values to variables.
+
+```{jinjar}
+{% set name="world" -%}
+Hello {{ name }}!
+```
+
+
+### Extends
+
+The `extends` tag can be used for template inheritance.
+See _Template Inheritance_ in `vignette("auxiliary-templates")`.
+
+
+### Include
+
+The `include` tag inserts the rendered contents of an auxiliary template.
+See _Template Inclusion_ in `vignette("auxiliary-templates")`.
+
+
+## Expressions {#expressions}
+
+Basic expressions are supported in templates.
+
+### Literals
+
+The simplest form of expressions are literals, which represent fixed values.
+
+As described in [Variables](#variables), the template is rendered using data stored in JSON format.
+For this reason, literals must also be specified in JSON format.
+The following types of literals are supported:
+
+* **String:** characters between two double quotes.
+* **Integer:** whole numbers without decimal part.
+* **Numeric:** floating point numbers written in decimal or scientific format.
+* **Boolean:** either `true` or `false` (lowercase).
+* **List:** data between square brackets.
+* **Object:** key-value data pairs between curly brackets (each key must be a string).
+* **NULL:** missing data is represented by `null`.
+
+Here is example usage for each type:
+
+```{jinjar}
+String: {{ "A string" }}
+Integer: {{ 3 }}
+Numeric: {{ 3.14 }} or {{ 1.6e-19 }}
+Boolean: {{ true }} or {{ false }}
+List: {{ [1, 2, 3] }}
+Object: {{ {"a": 1, "b": 2} }}
+Null: {{ null }}
+```
+
+
+### Math
+
+You can perform simple arithmetic using standard operators:
+
+```{jinjar}
+1 + 1: {{ 1 + 1 }}
+3 - 2: {{ 3 - 2 }}
+2 * 2: {{ 2 * 2 }}
+1 / 2: {{ 1 / 2 }}
+2 ^ 3: {{ 2 ^ 3 }}
+7 % 3: {{ 7 % 3 }}
+```
+
+
+### Comparisons
+
+You can perform comparisons:
+
+```{jinjar}
+1 == 1: {{ 1 == 1 }}
+1 != 1: {{ 1 != 1 }}
+2 >  1: {{ 2 > 1 }}
+2 >= 1: {{ 2 >= 1 }}
+2 <  1: {{ 2 < 1 }}
+2 <= 1: {{ 2 <= 1 }}
+```
+
+
+### Logic
+
+Within expressions and control structures, you can use the Boolean operators: `and`, `or`, and `not`.
+
+```{jinjar}
+true and false: {{ true and false }}
+true or false: {{ true or false }}
+not false: {{ not false }}
+```
+
+You can also check if a value is contained within a list using `in`:
+
+```{jinjar}
+{{ 1 in [1, 2, 3] }}
+```
+
+
+## Functions
+
+### Data Checks
+
+You can check if a value exists by passing the variable name as a string:
+
+```{jinjar, data=params}
+users does exist: {{ exists("users") }}
+abc doesn't exist: {{ exists("abc") }}
+```
+
+Similarly, you can check if a value exists within a JSON object, by passing the key as a string:
+
+```{jinjar, data=params}
+Birthplace does exist: {{ existsIn(godzilla, "Birthplace") }}
+Weight doesn't exist: {{ existsIn(godzilla, "Weight") }}
+```
+
+Concisely handle missing values using the `default()` function:
+
+```{jinjar, data=params}
+{{ default(godzilla.Weight, 20000) }}
+```
+
+You can also check the data type of a variable or literal:
+
+```{jinjar}
+{{ isString("a string") }}
+{{ isInteger(3) }}
+{{ isFloat(3.14) }}
+{{ isNumber(3) }} and {{ isNumber(3.14) }}
+{{ isBoolean(false) }}
+{{ isArray([1, 2, 3]) }}
+{{ isObject({"a": 1, "b": 2}) }}
+```
+
+
+### Data Conversion
+
+You can convert strings to numeric types, using the `int()` or `float()` functions:
+
+```{jinjar}
+{{ int("2") }}
+{{ float("2.5") }}
+```
+
+
+### Numeric Data
+
+You can check if an integer is even or odd, or divisible by some other integer.
+This could be used to make alternating row colors.
+
+```{jinjar}
+{{ even(42) }}
+{{ odd(42) }}
+{{ divisibleBy(42, 7) }}
+```
+
+You can round floating point numbers to a specific precision:
+
+```{jinjar}
+{{ round(3.1415, 0) }}
+{{ round(3.1415, 3) }}
+```
+
+
+### String Data
+
+Translate a string to lower case or upper case:
+
+```{jinjar}
+{{ lower("Hello") }}
+{{ upper("Hello") }}
+```
+
+Escape special characters for use in HTML content (see [HTML Escaping](#html-escaping)):
+
+```{jinjar, data=params}
+<input type="text" value="{{ escape_html(name) }}">
+```
+
+
+### JSON Lists
+
+Get the number of list elements:
+
+```{jinjar}
+length(): {{ length([3,1,2]) }}
+```
+
+Get the first or last elements:
+
+```{jinjar}
+first(): {{ first([3,1,2]) }}
+last():  {{ last([3,1,2]) }}
+```
+
+Get the minimum or maximum elements:
+
+```{jinjar}
+min(): {{ min([3,1,2]) }}
+max(): {{ max([3,1,2]) }}
+```
+
+Sort the list into ascending order:
+
+```{jinjar}
+sort(): {{ sort([3,1,2]) }}
+```
+
+Join a list with a separator:
+
+```{jinjar, data=params}
+{{ join([1,2,3], " + ") }}
+{{ join(users, ", ") }}
+```
+
+Generate a list as a range of integers:
+
+```{jinjar}
+{% for i in range(4) %}{{ loop.index1 }}{% endfor %}
+```
+
+Access elements using a dynamic index with `at()`.
+Note that the index is **zero-based**.
+
+```{jinjar}
+{% set x = [1,2,3] -%}
+{% set i = 2 -%}
+{{ x.2 }}
+{{ at(x, i) }}
+```
+
+
+### JSON Objects
+
+Access values using a dynamic key with `at()`:
+
+```{jinjar}
+{% set x = {"a": 1, "b": 2} -%}
+{% set key = "b" -%}
+{{ x.b }}
+{{ at(x, key) }}
+```
+
