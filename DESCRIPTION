@@ -1,6 +1,6 @@
 Package: jinjar
 Title: Template Engine Inspired by 'Jinja'
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: c(
     person("David", "Hall", , "david.hall.physics@gmail.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0002-2193-0480")),
@@ -28,10 +28,10 @@ Language: en-US
 RoxygenNote: 7.1.2
 SystemRequirements: C++11
 NeedsCompilation: yes
-Packaged: 2021-10-27 17:54:53 UTC; david
+Packaged: 2022-05-01 04:51:15 UTC; davidhall
 Author: David Hall [aut, cre, cph] (<https://orcid.org/0000-0002-2193-0480>),
   Lars Berscheid [cph] (Author of bundled inja library),
   Niels Lohmann [cph] (Author of bundled json library)
 Maintainer: David Hall <david.hall.physics@gmail.com>
 Repository: CRAN
-Date/Publication: 2021-10-28 19:40:06 UTC
+Date/Publication: 2022-05-01 05:10:02 UTC
