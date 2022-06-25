@@ -9,6 +9,14 @@ test_that("templating features work", {
   )
 })
 
+test_that("storing parsed document works", {
+  x <- parse_template("Hello {{ name }}!")
+
+  expect_snapshot(print(x))
+  expect_equal(render(x, name = "world"), "Hello world!")
+  expect_equal(render(x, name = "David"), "Hello David!")
+})
+
 test_that("template files work", {
   with_dir_tree(list("foo" = "Hello {{ name }}!"), {
     path_config <- jinjar_config(fs::path_wd())
@@ -94,5 +102,40 @@ test_that("escape_html() works", {
   expect_equal(
     render("{{ escape_html(x) }}", x = '&<>"&'),
     "&amp;&lt;&gt;&quot;&amp;"
+  )
+})
+
+test_that("quote_sql() works", {
+  expect_equal(
+    render("WHERE x = {{ quote_sql(col) }}", col = "world"),
+    "WHERE x = 'world'"
+  )
+  expect_equal(
+    render("WHERE x = {{ quote_sql(col) }}", col = 1L),
+    "WHERE x = 1"
+  )
+  expect_equal(
+    render("WHERE x = {{ quote_sql(col) }}", col = 2.5),
+    "WHERE x = 2.5"
+  )
+  expect_equal(
+    render("WHERE x = {{ quote_sql(col) }}", col = TRUE),
+    "WHERE x = TRUE"
+  )
+  expect_equal(
+    render("WHERE x = {{ quote_sql(col) }}", col = FALSE),
+    "WHERE x = FALSE"
+  )
+  expect_equal(
+    render("WHERE x = {{ quote_sql(col) }}", col = NA),
+    "WHERE x = NULL"
+  )
+  expect_equal(
+    render("WHERE x IN ({{ quote_sql(col) }})", col = c("world", "galaxy")),
+    "WHERE x IN ('world', 'galaxy')"
+  )
+  expect_equal(
+    render("WHERE x IN ({{ quote_sql(col) }})", col = c(1, 4, 6)),
+    "WHERE x IN (1, 4, 6)"
   )
 })
