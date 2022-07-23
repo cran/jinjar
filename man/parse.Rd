@@ -5,7 +5,7 @@
 \alias{parse_template}
 \alias{parse_template.character}
 \alias{parse_template.fs_path}
-\title{Parse template}
+\title{Parse a template}
 \usage{
 parse_template(.x, .config)
 
@@ -35,11 +35,13 @@ template syntax.
 }
 \examples{
 x <- parse_template("Hello {{ name }}!")
+
 render(x, name = "world")
 }
 \seealso{
 \itemize{
 \item \code{\link[=render]{render()}} to render the final document using data variables.
+\item \code{\link[=print.jinjar_template]{print()}} for pretty printing.
 \item \code{vignette("template-syntax")} describes how to write templates.
 }
 }
