@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# jinjar
+# jinjar <a href="https://davidchall.github.io/jinjar/"><img src="man/figures/logo.png" align="right" height="138" /></a>
 
 <!-- badges: start -->
 
@@ -87,17 +87,17 @@ to bridge this gap.
 Fortunately, we already have very popular R packages that fall on
 opposite ends of this spectrum:
 
--   [**whisker**](https://github.com/edwindj/whisker) – Implements the
-    [Mustache](https://mustache.github.io) templating syntax. This is
-    nearly **logic-less**, though some simple control flow is supported.
-    Mustache templates are language agnostic (i.e. can be rendered by
-    other Mustache implementations).
--   [**knitr**](https://yihui.org/knitr/) and
-    [**rmarkdown**](https://github.com/rstudio/rmarkdown) – Allows
-    **arbitrary code execution** to be knitted together with Markdown
-    text content. It even supports [multiple language
-    engines](https://bookdown.org/yihui/rmarkdown/language-engines.html)
-    (e.g. R, Python, C++, SQL).
+- [**whisker**](https://github.com/edwindj/whisker) – Implements the
+  [Mustache](https://mustache.github.io) templating syntax. This is
+  nearly **logic-less**, though some simple control flow is supported.
+  Mustache templates are language agnostic (i.e. can be rendered by
+  other Mustache implementations).
+- [**knitr**](https://yihui.org/knitr/) and
+  [**rmarkdown**](https://github.com/rstudio/rmarkdown) – Allows
+  **arbitrary code execution** to be knitted together with Markdown text
+  content. It even supports [multiple language
+  engines](https://bookdown.org/yihui/rmarkdown/language-engines.html)
+  (e.g. R, Python, C++, SQL).
 
 In contrast, jinjar strikes a balance inspired by the
 [Jinja](https://jinja.palletsprojects.com/) Python package. It supports

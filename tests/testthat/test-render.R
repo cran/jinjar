@@ -7,6 +7,11 @@ test_that("templating features work", {
     render("Hello {{ name }}!", name = "world"),
     "Hello world!"
   )
+
+  expect_equal(
+    render("{Hello {{ name }}!}", name = "world"),
+    "{Hello world!}"
+  )
 })
 
 test_that("template files work", {
@@ -103,6 +108,10 @@ test_that("quote_sql() works", {
     "WHERE x = 'world'"
   )
   expect_equal(
+    render("WHERE x = {{ quote_sql(col) }}", col = "Wayne's World"),
+    "WHERE x = 'Wayne''s World'"
+  )
+  expect_equal(
     render("WHERE x = {{ quote_sql(col) }}", col = 1L),
     "WHERE x = 1"
   )
@@ -133,14 +142,19 @@ test_that("quote_sql() works", {
 })
 
 cli::test_that_cli("render error", {
-  expect_snapshot_error(render("Hello {{ name }}!"), class = "jinjar_render_error")
-  expect_snapshot_error(render('{% include "missing.html" %}'), class = "jinjar_render_error")
+  expect_snapshot(render("Hello {{ name }}!"), error = TRUE)
+  expect_snapshot(render('{% include "missing.html" %}'), error = TRUE)
+
+  expect_snapshot(
+    render("{% for x in vec %}{{ x }}{% endfor %}", vec = "world"),
+    error = TRUE
+  )
 })
 
 cli::test_that_cli("JSON encoding error", {
   x <- parse_template("Hello {{ name }}!")
 
-  expect_snapshot_error(jinjar:::with_catch_cpp_errors({
+  expect_snapshot(jinjar:::with_catch_cpp_errors({
     jinjar:::render_(attr(x, "parsed"), '{"name": "world"]}')
-  }), class = "jinjar_json_error")
+  }), error = TRUE)
 })
