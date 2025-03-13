@@ -1,3 +1,8 @@
+# jinjar 0.3.2
+
+Fix for CRAN checks.
+
+
 # jinjar 0.3.1
 
 * Fixed a bug where disabling line statements could raise an error during template parsing. Since line statements are disabled by default, this error could be encountered quite easily (#31).

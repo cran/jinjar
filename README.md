@@ -9,7 +9,7 @@
 status](https://www.r-pkg.org/badges/version/jinjar)](https://CRAN.R-project.org/package=jinjar)
 [![Codecov test
 coverage](https://codecov.io/gh/davidchall/jinjar/branch/master/graph/badge.svg)](https://app.codecov.io/gh/davidchall/jinjar?branch=master)
-[![R-CMD-check](https://github.com/davidchall/jinjar/workflows/R-CMD-check/badge.svg)](https://github.com/davidchall/jinjar/actions)
+[![R-CMD-check](https://github.com/davidchall/jinjar/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/davidchall/jinjar/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 jinjar is a templating engine for R, inspired by the
@@ -64,13 +64,12 @@ template |>
 #> * Darth Vader (Tatooine)
 #> * Leia Organa (Alderaan)
 #> * Owen Lars (Tatooine)
-#> * Beru Whitesun lars (Tatooine)
+#> * Beru Whitesun Lars (Tatooine)
 #> * Biggs Darklighter (Tatooine)
 #> * Obi-Wan Kenobi (Stewjon)
 #> * Wilhuff Tarkin (Eriadu)
 #> * Han Solo (Corellia)
 #> * Wedge Antilles (Corellia)
-#> * Jek Tono Porkins (Bestine IV)
 #> * Raymus Antilles (Alderaan)
 ```
 

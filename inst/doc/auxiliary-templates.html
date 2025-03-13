@@ -49,7 +49,7 @@ overflow: visible;
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -60,7 +60,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -378,29 +378,29 @@ found. You can ignore these errors by setting the
 <code>jinjar_config()</code>.</p>
 <p>As an example, we create an auxiliary file <code>header.html</code>
 with contents:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="kw">&lt;html</span> <span class="er">lang</span><span class="ot">=</span><span class="st">&quot;en&quot;</span><span class="kw">&gt;</span></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="kw">&lt;head&gt;</span></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>    <span class="kw">&lt;title&gt;</span>My webpage<span class="kw">&lt;/title&gt;</span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="kw">&lt;/head&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">html</span><span class="ot"> lang</span><span class="op">=</span><span class="st">&quot;en&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>My webpage<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span></code></pre></div>
 <p>and an auxiliary file <code>footer.html</code> with contents:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="kw">&lt;/html&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre></div>
 <p>And then the main template is rendered as:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode jinjar html bg-info"><code class="sourceCode html"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>{% include &quot;header.html&quot; %}</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="kw">&lt;body&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
 <span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>Body</span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="kw">&lt;/body&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
 <span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>{% include &quot;footer.html&quot; %}</span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode html bg-success"><code class="sourceCode html"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span></span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="kw">&lt;html</span> <span class="er">lang</span><span class="ot">=</span><span class="st">&quot;en&quot;</span><span class="kw">&gt;</span></span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="kw">&lt;head&gt;</span></span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>    <span class="kw">&lt;title&gt;</span>My webpage<span class="kw">&lt;/title&gt;</span></span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="kw">&lt;/head&gt;</span></span>
+<div class="sourceCode" id="cb6"><pre class="sourceCode html bg-success"><code class="sourceCode html"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">html</span><span class="ot"> lang</span><span class="op">=</span><span class="st">&quot;en&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>My webpage<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
 <span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="kw">&lt;body&gt;</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
 <span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>Body</span>
-<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="kw">&lt;/body&gt;</span></span>
-<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="kw">&lt;/html&gt;</span></span></code></pre></div>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre></div>
 </div>
 <div id="extends" class="section level2">
 <h2>Template Inheritance</h2>
@@ -410,18 +410,18 @@ that contains all the common elements of your document and defines
 powerful technique.</p>
 <p>As an example, consider the following base template stored in
 <code>base.html</code>:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span></span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="kw">&lt;html&gt;</span></span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="kw">&lt;head&gt;</span></span>
+<div class="sourceCode" id="cb7"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">html</span><span class="dt">&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
 <span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>  {% block head -%}</span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>  <span class="kw">&lt;link</span> <span class="er">rel</span><span class="ot">=</span><span class="st">&quot;stylesheet&quot;</span> <span class="er">href</span><span class="ot">=</span><span class="st">&quot;style.css&quot;</span> <span class="kw">/&gt;</span></span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>  <span class="kw">&lt;title&gt;</span>{% block title %}{% endblock %} - My Webpage<span class="kw">&lt;/title&gt;</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">link</span><span class="ot"> rel</span><span class="op">=</span><span class="st">&quot;stylesheet&quot;</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;style.css&quot;</span><span class="ot"> </span><span class="dt">/&gt;</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>{% block title %}{% endblock %} - My Webpage<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
 <span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>  {% endblock %}</span>
-<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="kw">&lt;/head&gt;</span></span>
-<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="kw">&lt;body&gt;</span></span>
-<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>  <span class="kw">&lt;div</span> <span class="er">id</span><span class="ot">=</span><span class="st">&quot;content&quot;</span><span class="kw">&gt;</span>{% block content %}{% endblock %}<span class="kw">&lt;/div&gt;</span></span>
-<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="kw">&lt;/body&gt;</span></span>
-<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="kw">&lt;/html&gt;</span></span></code></pre></div>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;content&quot;</span><span class="dt">&gt;</span>{% block content %}{% endblock %}<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre></div>
 <p>This base template declares three <code>{% block %}</code> tags that
 child templates can fill in: <code>head</code>, <code>title</code> and
 <code>content</code>. Note that the base template itself defines some
@@ -437,37 +437,37 @@ look like this:</p>
 <span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>{% block title %}Index{% endblock %}</span>
 <span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>{% block head %}</span>
 <span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>  {{ super() }}</span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>  <span class="kw">&lt;style</span> <span class="er">type</span><span class="ot">=</span><span class="st">&quot;text/css&quot;</span><span class="kw">&gt;</span></span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>    <span class="fu">.important</span> { <span class="kw">color</span>: <span class="cn">#336699</span><span class="op">;</span> }</span>
-<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>  <span class="kw">&lt;/style&gt;</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">style</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;text/css&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>    <span class="fu">.important</span> { <span class="kw">color</span><span class="ch">:</span> <span class="cn">#336699</span><span class="op">;</span> }</span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">style</span><span class="dt">&gt;</span></span>
 <span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>{% endblock %}</span>
 <span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>{% block content %}</span>
-<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>  <span class="kw">&lt;h1&gt;</span>Index<span class="kw">&lt;/h1&gt;</span></span>
-<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a>  <span class="kw">&lt;p</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;important&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">h1</span><span class="dt">&gt;</span>Index<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">p</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;important&quot;</span><span class="dt">&gt;</span></span>
 <span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a>    Welcome to my blog!</span>
-<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a>  <span class="kw">&lt;/p&gt;</span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
 <span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a>{% endblock %}</span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode html bg-success"><code class="sourceCode html"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span></span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="kw">&lt;html&gt;</span></span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="kw">&lt;head&gt;</span></span>
+<div class="sourceCode" id="cb9"><pre class="sourceCode html bg-success"><code class="sourceCode html"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">html</span><span class="dt">&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
 <span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>  </span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>  <span class="kw">&lt;link</span> <span class="er">rel</span><span class="ot">=</span><span class="st">&quot;stylesheet&quot;</span> <span class="er">href</span><span class="ot">=</span><span class="st">&quot;style.css&quot;</span> <span class="kw">/&gt;</span></span>
-<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>  <span class="kw">&lt;title&gt;</span>Index - My Webpage<span class="kw">&lt;/title&gt;</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">link</span><span class="ot"> rel</span><span class="op">=</span><span class="st">&quot;stylesheet&quot;</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;style.css&quot;</span><span class="ot"> </span><span class="dt">/&gt;</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>Index - My Webpage<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
 <span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>  </span>
-<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>  <span class="kw">&lt;style</span> <span class="er">type</span><span class="ot">=</span><span class="st">&quot;text/css&quot;</span><span class="kw">&gt;</span></span>
-<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a>    <span class="fu">.important</span> { <span class="kw">color</span>: <span class="cn">#336699</span><span class="op">;</span> }</span>
-<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a>  <span class="kw">&lt;/style&gt;</span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">style</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;text/css&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a>    <span class="fu">.important</span> { <span class="kw">color</span><span class="ch">:</span> <span class="cn">#336699</span><span class="op">;</span> }</span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">style</span><span class="dt">&gt;</span></span>
 <span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a></span>
-<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="kw">&lt;/head&gt;</span></span>
-<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a><span class="kw">&lt;body&gt;</span></span>
-<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a>  <span class="kw">&lt;div</span> <span class="er">id</span><span class="ot">=</span><span class="st">&quot;content&quot;</span><span class="kw">&gt;</span></span>
-<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a>  <span class="kw">&lt;h1&gt;</span>Index<span class="kw">&lt;/h1&gt;</span></span>
-<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a>  <span class="kw">&lt;p</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;important&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;content&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">h1</span><span class="dt">&gt;</span>Index<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">p</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;important&quot;</span><span class="dt">&gt;</span></span>
 <span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a>    Welcome to my blog!</span>
-<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a>  <span class="kw">&lt;/p&gt;</span></span>
-<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a><span class="kw">&lt;/div&gt;</span></span>
-<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a><span class="kw">&lt;/body&gt;</span></span>
-<span id="cb9-21"><a href="#cb9-21" tabindex="-1"></a><span class="kw">&lt;/html&gt;</span></span></code></pre></div>
+<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb9-21"><a href="#cb9-21" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre></div>
 <p>This child template defines the three blocks declared by the parent
 template: <code>head</code>, <code>title</code> and
 <code>content</code>. In the case of the <code>head</code> block, it
